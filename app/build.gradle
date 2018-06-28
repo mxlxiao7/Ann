@@ -17,6 +17,28 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+
+        }
+
+        staging {
+            // Specifies a sorted list of fallback build types that the
+            // plugin should try to use when a dependency does not include a
+            // "staging" build type. You may specify as many fallbacks as you
+            // like, and the plugin selects the first build type that's
+            // available in the dependency.
+            matchingFallbacks = ['debug', 'qa', 'release']
+        }
+    }
+
+    dexOptions {
+        //声明是否预 dex 库依赖项以加快您的增量构建速度。由于此功能可能减慢您的干净构建的速度，您可能需要为持续性集成服务器停用此功能。
+        //preDexLibraries true
+        //设置运行 dex-in-process 时要使用的最大线程数量
+        maxProcessCount 8
+        //设置 DEX 编译器的最大堆大小。
+        //javaMaxHeapSize "2048m"
     }
 }
 
@@ -29,15 +51,13 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     /**
-    * 自定义
-    */
+     * 自定义
+     */
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.1.1'
     //noinspection GradleCompatible
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.orhanobut:logger:2.2.0'
-
-
 
 }

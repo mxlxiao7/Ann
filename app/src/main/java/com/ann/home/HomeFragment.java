@@ -1,5 +1,6 @@
 package com.ann.home;
 
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import com.ann.BaseFragment;
 import com.ann.R;
 import com.orhanobut.logger.Logger;
 
+@SuppressLint("InflateParams")
 public class HomeFragment extends BaseFragment {
 
     public static HomeFragment newInstance() {
@@ -33,7 +35,7 @@ public class HomeFragment extends BaseFragment {
         Logger.i(this.getClass().getSimpleName() + ":"
                 + new Exception().getStackTrace()[0].getMethodName());
 
-        View view = inflater.inflate(R.layout.fragment_home, container);
+        View view = inflater.inflate(R.layout.fragment_home, null);
         TextView textView = (TextView) view.findViewById(R.id.textview);
         if (getArguments() != null) {
             //取出保存的值

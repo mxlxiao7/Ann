@@ -1,5 +1,6 @@
 package com.ann.platform;
 
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,8 +12,8 @@ import android.widget.TextView;
 
 import com.ann.BaseFragment;
 import com.ann.R;
-import com.orhanobut.logger.Logger;
 
+@SuppressLint("InflateParams")
 public class PlatformFragment extends BaseFragment {
 
     public static PlatformFragment newInstance() {
@@ -24,7 +25,6 @@ public class PlatformFragment extends BaseFragment {
     }
 
 
-
     @Nullable
     @Override
     public View onCreateView(
@@ -32,7 +32,7 @@ public class PlatformFragment extends BaseFragment {
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_home, container);
+        View view = inflater.inflate(R.layout.fragment_home, null);
         TextView textView = (TextView) view.findViewById(R.id.textview);
         if (getArguments() != null) {
             //取出保存的值

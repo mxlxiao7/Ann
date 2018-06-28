@@ -3,8 +3,8 @@
     package="com.ann">
 
     <application
-        android:name=".BaseApplication"
-        android:allowBackup="true"
+        android:name=".AnnApplication"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -13,14 +13,18 @@
 
 
         <activity
-
             android:name=".index.MainActivity"
+            android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
+
         </activity>
     </application>
 

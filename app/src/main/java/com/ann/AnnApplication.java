@@ -9,7 +9,7 @@ import com.ann.config.Global;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
-public class BaseApplication extends Application  {
+public class AnnApplication extends Application  {
 
     @Override
     public void onCreate() {
@@ -33,7 +33,7 @@ public class BaseApplication extends Application  {
 
 
 
-    private Application.ActivityLifecycleCallbacks mLifecycleCallbacks = new ActivityLifecycleCallbacks(){
+    private ActivityLifecycleCallbacks mLifecycleCallbacks = new ActivityLifecycleCallbacks(){
 
         @Override
         public void onActivityCreated(Activity activity, Bundle savedInstanceState) {

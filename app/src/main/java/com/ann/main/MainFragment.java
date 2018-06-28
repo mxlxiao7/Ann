@@ -30,7 +30,7 @@ public class MainFragment extends BaseFragment {
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_home, null);
+        View view = inflater.inflate(R.layout.fragment_home, container);
         TextView textView = (TextView) view.findViewById(R.id.textview);
         if (getArguments() != null) {
             //取出保存的值

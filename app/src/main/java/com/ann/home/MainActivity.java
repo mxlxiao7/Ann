@@ -1,4 +1,4 @@
-package com.ann.index;
+package com.ann.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,10 +11,6 @@ import android.widget.FrameLayout;
 import com.ann.BaseActivity;
 import com.ann.R;
 import com.ann.algorithm.AlgorithmsFragment;
-import com.ann.home.HomeFragment;
-import com.ann.main.MainFragment;
-import com.ann.other.OtherFragment;
-import com.ann.platform.PlatformFragment;
 import com.ann.utils.BottomNavigationViewHelper;
 
 

@@ -1,4 +1,4 @@
-package com.ann.platform;
+package com.ann.home;
 
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
@@ -14,10 +14,10 @@ import com.ann.BaseFragment;
 import com.ann.R;
 
 @SuppressLint("InflateParams")
-public class PlatformFragment extends BaseFragment {
+public class OtherFragment extends BaseFragment {
 
-    public static PlatformFragment newInstance() {
-        PlatformFragment fragmentOne = new PlatformFragment();
+    public static OtherFragment newInstance() {
+        OtherFragment fragmentOne = new OtherFragment();
         Bundle bundle = new Bundle();
         bundle.putString("name", fragmentOne.getClass().getSimpleName());
         fragmentOne.setArguments(bundle);
@@ -51,5 +51,6 @@ public class PlatformFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
     }
+
 
 }

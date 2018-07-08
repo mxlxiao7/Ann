@@ -1,0 +1,37 @@
+apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+
+/**
+ * 编写自定义插件配置
+ */
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+/**
+ * 发布配置，这里发布到本地
+ */
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId 'ann.gradle.plugin'
+            artifactId 'customplugin-extension'
+            version '1.0.0-SNAPSHOT'
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            // change to point to your repo, e.g.
+            url uri('../repo')
+        }
+    }
+}
+

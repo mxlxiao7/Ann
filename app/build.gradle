@@ -68,9 +68,11 @@ android {
         // true--检查所有问题点，包含其他默认关闭项
         checkAllWarnings true
         // true--所有warning当做error
-        warningsAsErrors true
+        warningsAsErrors false
         // 关闭指定问题检查
-//        disable 'TypographyFractions', 'TypographyQuotes'
+        disable 'UnusedIds'
+        // 忽略指定问题的规则(同关闭检查)
+        ignore 'SelectableText','ConvertToWebp'
         // 打开指定问题检查
 //        enable 'RtlHardcoded', 'RtlCompat', 'RtlEnabled'
         // 仅检查指定问题
@@ -101,8 +103,6 @@ android {
 //        error 'Wakelock', 'TextViewEdits'
         // 指定问题的规则生成警告
 //        warning 'ResourceAsColor'
-        // 忽略指定问题的规则(同关闭检查)
-        ignore 'SelectableText'
     }
 
 }

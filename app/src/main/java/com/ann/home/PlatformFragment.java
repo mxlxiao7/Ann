@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.ann.BaseFragment;
 import com.ann.R;
@@ -32,15 +31,15 @@ public class PlatformFragment extends BaseFragment {
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_home, null);
-        TextView textView = (TextView) view.findViewById(R.id.textview);
-        if (getArguments() != null) {
-            //取出保存的值
-            textView.setText(getArguments().getString("name"));
-        }
+        View view = inflater.inflate(R.layout.fragment_platform, null);
         return view;
 
     }
+
+    public void initView() {
+
+    }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

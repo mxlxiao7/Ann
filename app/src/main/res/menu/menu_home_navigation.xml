@@ -17,11 +17,6 @@
         android:title="@string/navigation_title_platform" />
 
     <item
-        android:id="@+id/navigation_other"
-        android:icon="@drawable/ic_index_other"
-        android:title="@string/navigation_title_other" />
-
-    <item
         android:id="@+id/navigation_main"
         android:icon="@drawable/ic_index_main"
         android:title="@string/navigation_title_main" />

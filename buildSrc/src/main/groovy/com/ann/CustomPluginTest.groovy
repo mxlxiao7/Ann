@@ -2,6 +2,7 @@ package com.ann
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 
 class CustomPluginTest implements Plugin<Project> {
 
@@ -14,10 +15,17 @@ class CustomPluginTest implements Plugin<Project> {
             println("年龄：" + project.customPlugin.age)
             println("地址：" + project.customPlugin.address)
         }
+
+        project.task('showPersonInfo2') {
+            group = "test-plugin2"
+            doLast {
+                println "Hello"
+            }
+        }
     }
 }
 
-class CustomPluginTestExtension{
+class CustomPluginTestExtension {
     def name = "init"
     def age = "init"
     def address = "init"

@@ -8,6 +8,10 @@
         12sp
     </dimen>
 
+
+    <dimen name="common_title_height">74dp</dimen>
+    <dimen name="common_title_padding_top">22dp</dimen>
+    <dimen name="common_title_text_size">18sp</dimen>
     <!--BottomNavigationView 只放图标时的设置-->
     <!--<dimen name="design_bottom_navigation_active_text_size">0sp</dimen>-->
     <!--<dimen name="design_bottom_navigation_text_size">0sp</dimen>-->

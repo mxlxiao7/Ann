@@ -10,7 +10,6 @@ import android.widget.FrameLayout;
 
 import com.ann.BaseActivity;
 import com.ann.R;
-import com.ann.algorithm.AlgorithmsFragment;
 import com.ann.utils.BottomNavigationViewHelper;
 
 
@@ -19,7 +18,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     private BottomNavigationView mNavigation;
     private FrameLayout mFragmentContainer;
-    private Fragment[] mFragments = new Fragment[5];
+    private Fragment[] mFragments = new Fragment[4];
     private int releaseIndex = -1;
 
     @Override
@@ -62,11 +61,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             case R.id.navigation_platform:
                 index = 2;
                 break;
-            case R.id.navigation_other:
-                index = 3;
-                break;
             case R.id.navigation_main:
-                index = 4;
+                index = 3;
                 break;
         }
 
@@ -117,7 +113,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
      */
     private Fragment getFragmentWithIndex(int index) {
 
-        if (index < 0 || index > 4) {
+        if (index < 0 || index > 3) {
             return null;
         }
 
@@ -134,9 +130,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                     fragment = PlatformFragment.newInstance();
                     break;
                 case 3:
-                    fragment = OtherFragment.newInstance();
-                    break;
-                case 4:
                     fragment = MainFragment.newInstance();
                     break;
             }

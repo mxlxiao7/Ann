@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">Ann</string>
-    <string name="navigation_title_home">Home</string>
-    <string name="navigation_title_algorithms">Algorithms</string>
-    <string name="navigation_title_platform">Platform</string>
-    <string name="navigation_title_main">Main</string>
+    <string name="navigation_title_home">首页</string>
+    <string name="navigation_title_algorithms">A</string>
+    <string name="navigation_title_platform">平台</string>
+    <string name="navigation_title_main">我</string>
+    <string name="navigation_title_platform_title">目录</string>
+    <string name="common_no_content">暂无内容</string>
+
+    <string name="function_empty_text">暂无数据</string>
+    <string name="common_clean">清除</string>
+    <string name="common_exe">执行</string>
+
+
 </resources>

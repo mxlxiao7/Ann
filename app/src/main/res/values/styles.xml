@@ -12,4 +12,19 @@
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
+    <style name="btn.style" parent="">
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">@dimen/btn_margin_t_b</item>
+        <item name="android:paddingBottom">@dimen/btn_margin_t_b</item>
+        <item name="android:paddingLeft">@dimen/btn_margin_l_r</item>
+        <item name="android:paddingRight">@dimen/btn_margin_l_r</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/btn_h</item>
+        <item name="android:textColor">@color/color_999999</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/btn_bottom_confirm_bg</item>
+        <item name="android:layout_marginRight">10dip</item>
+    </style>
+
+
 </resources>

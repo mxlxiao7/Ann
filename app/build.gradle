@@ -19,7 +19,7 @@ android {
         /**
          *  往BuildConfig 中添加参数
          */
-        buildConfigField 'String','API_SERVER_URL','"http://url/"'
+        buildConfigField 'String', 'API_SERVER_URL', '"http://url/"'
     }
 
     compileOptions {
@@ -68,11 +68,12 @@ android {
         // true--检查所有问题点，包含其他默认关闭项
         checkAllWarnings true
         // true--所有warning当做error
-        warningsAsErrors false
+        warningsAsErrors true
         // 关闭指定问题检查
-        disable 'UnusedIds'
+        disable 'UnusedIds', 'ContentDescription'
         // 忽略指定问题的规则(同关闭检查)
-        ignore 'SelectableText','ConvertToWebp'
+        ignore 'SelectableText', 'ConvertToWebp', 'ContentDescription', 'IconDensities',
+                'CheckResult', 'ContentDescription'
         // 打开指定问题检查
 //        enable 'RtlHardcoded', 'RtlCompat', 'RtlEnabled'
         // 仅检查指定问题
@@ -90,7 +91,7 @@ android {
         // true--生成XML格式报告
         xmlReport false
         // 指定xml报告文档(默认lint-results.xml)
-        xmlOutput file("lint-report.xml")
+//        xmlOutput file("lint-report.xml")
         // true--生成HTML报告(带问题解释，源码位置，等)
         htmlReport true
         // html报告可选路径(构建器默认是lint-results.html )
@@ -108,9 +109,9 @@ android {
 }
 
 dependencies {
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -127,16 +128,27 @@ dependencies {
 //    implementation 'com.android.tools.lint:lint:25.3.0'
 //    implementation 'com.android.tools.lint:lint-api:25.3.0'
 //    implementation 'com.android.tools.lint:lint-checks:25.3.0'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
 
+    //下拉刷新
+    implementation project(path: ':pulltorefresh')
+
+    //内存检测
+    implementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+//    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }
 
-
+/**
+ * 自定义插件
+ */
 apply plugin: 'ann-test'
-customPlugin{
+customPlugin {
     name = "bobo"
     age = "25"
     address = "广东珠海"
 }
-
-
 apply from: "../custom_build.gradle"

@@ -1,15 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ptr="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <!--title栏-->
     <include
-        layout="@layout/fragment_common_title_layout"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/cl_title"
+        layout="@layout/fragment_common_title_layout" />
 
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/ll_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/cl_title"
+        android:cacheColorHint="#00000000"
+        android:fadingEdge="none"
+        android:divider="@android:color/transparent"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:smoothScrollbar="true"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrHeaderTextAppearance="?android:attr/textAppearanceMedium"
+        ptr:ptrMode="pullFromStart" />
 
+    <!-- Here is the view to show if the list is emtpy -->
+    <LinearLayout
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/cl_title"
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/emptyText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:paddingTop="10dip"
+            android:text="@string/common_no_content"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="@dimen/common_empty_view_text_size" />
+    </LinearLayout>
+
+</RelativeLayout>

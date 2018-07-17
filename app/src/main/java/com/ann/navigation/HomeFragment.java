@@ -1,4 +1,4 @@
-package com.ann.home;
+package com.ann.navigation;
 
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
@@ -12,12 +12,13 @@ import android.widget.TextView;
 
 import com.ann.BaseFragment;
 import com.ann.R;
+import com.orhanobut.logger.Logger;
 
 @SuppressLint("InflateParams")
-public class MainFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment {
 
-    public static MainFragment newInstance() {
-        MainFragment fragmentOne = new MainFragment();
+    public static HomeFragment newInstance() {
+        HomeFragment fragmentOne = new HomeFragment();
         Bundle bundle = new Bundle();
         bundle.putString("name", fragmentOne.getClass().getSimpleName());
         fragmentOne.setArguments(bundle);
@@ -31,6 +32,9 @@ public class MainFragment extends BaseFragment {
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
 
+        Logger.i(this.getClass().getSimpleName() + ":"
+                + new Exception().getStackTrace()[0].getMethodName());
+
         View view = inflater.inflate(R.layout.fragment_home, null);
         TextView textView = (TextView) view.findViewById(R.id.textview);
         if (getArguments() != null) {
@@ -38,8 +42,8 @@ public class MainFragment extends BaseFragment {
             textView.setText(getArguments().getString("name"));
         }
         return view;
-
     }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -50,7 +54,4 @@ public class MainFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
     }
-
-
-
 }

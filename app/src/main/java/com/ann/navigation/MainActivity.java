@@ -1,4 +1,4 @@
-package com.ann.home;
+package com.ann.navigation;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,7 +10,7 @@ import android.widget.FrameLayout;
 
 import com.ann.BaseActivity;
 import com.ann.R;
-import com.ann.utils.BottomNavigationViewHelper;
+import com.ann.widget.BottomNavigationViewHelper;
 
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -25,8 +25,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         init();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     private void init() {
@@ -36,7 +40,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         mNavigation.setOnNavigationItemSelectedListener(this);
         mNavigation.setSelectedItemId(R.id.navigation_home);
 
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -45,7 +48,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         });
 
     }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -138,6 +140,4 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
         return fragment;
     }
-
-
 }

@@ -1,4 +1,4 @@
-package com.ann.utils;
+package com.ann.widget;
 
 import android.annotation.SuppressLint;
 import android.support.design.internal.BottomNavigationItemView;

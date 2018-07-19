@@ -17,6 +17,7 @@ package com.handmark.pulltorefresh.library.extras;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.webkit.JavascriptInterface;
@@ -60,6 +61,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshWebView;
  *
  * @author Chris Banes
  */
+@SuppressLint("ObsoleteSdkInt")
 public class PullToRefreshWebView2 extends PullToRefreshWebView {
 
     static final String JS_INTERFACE_PKG = "ptr";

@@ -15,6 +15,7 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build.VERSION;
@@ -23,7 +24,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-
+@SuppressLint("ObsoleteSdkInt")
 public class PullToRefreshWebView extends PullToRefreshBase<WebView> {
 
     private static final OnRefreshListener<WebView> defaultOnRefreshListener = new OnRefreshListener<WebView>() {

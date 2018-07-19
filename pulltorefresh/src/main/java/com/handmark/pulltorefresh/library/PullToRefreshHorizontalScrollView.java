@@ -15,6 +15,7 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build.VERSION;
@@ -22,7 +23,7 @@ import android.os.Build.VERSION_CODES;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.HorizontalScrollView;
-
+@SuppressLint("ObsoleteSdkInt")
 public class PullToRefreshHorizontalScrollView extends PullToRefreshBase<HorizontalScrollView> {
 
 	public PullToRefreshHorizontalScrollView(Context context) {

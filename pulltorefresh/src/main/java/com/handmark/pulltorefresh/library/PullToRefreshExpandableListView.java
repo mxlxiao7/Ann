@@ -15,6 +15,7 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build.VERSION;
@@ -25,6 +26,7 @@ import android.widget.ExpandableListView;
 
 import com.handmark.pulltorefresh.library.internal.EmptyViewMethodAccessor;
 
+@SuppressLint("ObsoleteSdkInt")
 public class PullToRefreshExpandableListView extends PullToRefreshAdapterViewBase<ExpandableListView> {
 
 	public PullToRefreshExpandableListView(Context context) {

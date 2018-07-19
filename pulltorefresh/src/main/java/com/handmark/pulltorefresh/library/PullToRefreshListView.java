@@ -15,6 +15,7 @@
  *******************************************************************************/
 package com.handmark.pulltorefresh.library;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -31,7 +32,7 @@ import android.widget.ListView;
 
 import com.handmark.pulltorefresh.library.internal.EmptyViewMethodAccessor;
 import com.handmark.pulltorefresh.library.internal.LoadingLayout;
-
+@SuppressLint("ObsoleteSdkInt")
 public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView> {
 
 	private LoadingLayout mHeaderLoadingView;

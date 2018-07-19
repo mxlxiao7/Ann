@@ -11,18 +11,23 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ann.BaseFragment;
 import com.ann.R;
 import com.ann.designpattern.create.factory.simple.FragmentFactory;
 import com.ann.function.FunctionActivity;
-import com.ann.function.threadmanager.ThreadManager;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 @SuppressLint("InflateParams")
 public class PlatformFragment extends BaseFragment {
@@ -118,22 +123,43 @@ public class PlatformFragment extends BaseFragment {
      * 加载数据
      */
     private void loadData() {
-
-        ThreadManager.getPoolProxy().execute(() -> {
+        /**
+         * 本地获取数据任务
+         */
+        Flowable<ArrayList<String>> cache = Flowable.create(emitter -> {
             ArrayList<String> data = new ArrayList(FragmentFactory.TITLES.length);
             Collections.addAll(data, FragmentFactory.TITLES);
-            mAdapter.setData(data);
-            mAdapter.notifyDataSetChanged();
-        });
+
+            //如果本地无数据，则调用onComplete()方法，停止本地数据获取工作，
+            if (data == null || data.size() == 0) {
+                emitter.onComplete();
+            } else {
+                emitter.onNext(data);
+            }
+        }, BackpressureStrategy.BUFFER);
 
 
+        /**
+         * 网络获取数据任务
+         */
+        Flowable<ArrayList<String>> network = Flowable.create(emitter -> {
+            //从网络获取数据，暂时用本地代替
+            ArrayList<String> data = new ArrayList(FragmentFactory.TITLES.length);
+            Collections.addAll(data, FragmentFactory.TITLES);
+            emitter.onNext(data);
+        }, BackpressureStrategy.BUFFER);
 
-//        getActivity().runOnUiThread(() -> {
-//            ArrayList<String> data = new ArrayList(FragmentFactory.TITLES.length);
-//            Collections.addAll(data, FragmentFactory.TITLES);
-//            mAdapter.setData(data);
-//            mAdapter.notifyDataSetChanged();
-//        });
+
+        /**
+         * 执行数据显示
+         */
+        Flowable.concat(cache, network)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(data -> {
+                    mAdapter.setData(data);
+                    mAdapter.notifyDataSetChanged();
+                }, t -> Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
 

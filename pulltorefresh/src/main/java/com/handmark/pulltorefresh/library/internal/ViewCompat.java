@@ -21,7 +21,7 @@ import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.view.View;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation","ObsoleteSdkInt"})
 public class ViewCompat {
 
 	public static void postOnAnimation(View view, Runnable runnable) {

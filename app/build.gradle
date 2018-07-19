@@ -124,18 +124,25 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+
+
+    //logger
     implementation 'com.orhanobut:logger:2.2.0'
 //    implementation 'com.android.tools.lint:lint:25.3.0'
 //    implementation 'com.android.tools.lint:lint-api:25.3.0'
 //    implementation 'com.android.tools.lint:lint-checks:25.3.0'
+
+    //eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'
+
+    //rxjava
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
 
-    //下拉刷新
+    //pulltorefresh
     implementation project(path: ':pulltorefresh')
 
-    //内存检测
+    //leakcanary
     implementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
 
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'

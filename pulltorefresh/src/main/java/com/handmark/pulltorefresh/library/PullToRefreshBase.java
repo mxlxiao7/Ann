@@ -41,7 +41,7 @@ import com.handmark.pulltorefresh.library.internal.RotateLoadingLayout;
 import com.handmark.pulltorefresh.library.internal.Utils;
 import com.handmark.pulltorefresh.library.internal.ViewCompat;
 
-@SuppressLint("CustomViewStyleable")
+@SuppressLint({"CustomViewStyleable","ObsoleteSdkInt"})
 public abstract class PullToRefreshBase<T extends View> extends LinearLayout implements IPullToRefresh<T> {
 
     // ===========================================================

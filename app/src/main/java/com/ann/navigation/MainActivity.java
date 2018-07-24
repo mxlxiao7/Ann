@@ -5,21 +5,44 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.ann.BaseActivity;
 import com.ann.R;
 import com.ann.widget.BottomNavigationViewHelper;
+import com.orhanobut.logger.Logger;
 
+import java.lang.reflect.Method;
+import java.util.LinkedHashMap;
 
+/**
+ * 页面基类
+ * 承载4个页面
+ * <p>
+ * Author:maxiaolong
+ * Date:2018/7/24
+ * Time:10:43
+ * Email:mxlxiao7@sina.com
+ */
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 
     private BottomNavigationView mNavigation;
     private FrameLayout mFragmentContainer;
-    private Fragment[] mFragments = new Fragment[4];
     private int releaseIndex = -1;
+
+    /**
+     * 切换tab数据，初始化时就赋值
+     */
+    private LinkedHashMap<Integer, TabEntry> mTab = new LinkedHashMap() {{
+        put(0, new TabEntry(null, HomeFragment.class));
+        put(1, new TabEntry(null, AlgorithmsFragment.class));
+        put(2, new TabEntry(null, PlatformFragment.class));
+        put(3, new TabEntry(null, MainFragment.class));
+    }};
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,19 +57,13 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     private void init() {
-        mFragmentContainer = (FrameLayout) findViewById(R.id.ll_container);
+        mFragmentContainer = findViewById(R.id.ll_container);
         mNavigation = findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(mNavigation);
         mNavigation.setOnNavigationItemSelectedListener(this);
         mNavigation.setSelectedItemId(R.id.navigation_home);
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mNavigation.setSelectedItemId(R.id.navigation_main);
-            }
-        });
-
+        runOnUiThread(() -> mNavigation.setSelectedItemId(R.id.navigation_home));
     }
 
     @Override
@@ -79,6 +96,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
 
     /**
+     * 切换tab
+     *
      * @param selectIndex
      * @param releaseIndex
      */
@@ -86,11 +105,16 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        Fragment releaseFragment = getFragmentWithIndex(releaseIndex);
-        if (releaseFragment != null) {
-            transaction.hide(releaseFragment);
+        //隐藏当前页面
+        for (int i = 0; i < mTab.size(); i++) {
+            Fragment fragment = mTab.get(i).fragment;
+            if (fragment == null || selectIndex == i || fragment.isHidden()) {
+                continue;
+            }
+            transaction.hide(fragment);
         }
 
+        //获取切换目标页面
         Fragment selectFragment = getFragmentWithIndex(selectIndex);
         do {
             if (selectFragment == null) {
@@ -112,6 +136,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     /**
      * 获取Fragment
+     *
+     * @param index 目标索引，从0开始
+     * @return
      */
     private Fragment getFragmentWithIndex(int index) {
 
@@ -119,23 +146,17 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             return null;
         }
 
-        Fragment fragment = mFragments[index];
+        final TabEntry tabEntry = mTab.get(index);
+        Fragment fragment = tabEntry.fragment;
         if (fragment == null) {
-            switch (index) {
-                case 0:
-                    fragment = HomeFragment.newInstance();
-                    break;
-                case 1:
-                    fragment = AlgorithmsFragment.newInstance();
-                    break;
-                case 2:
-                    fragment = PlatformFragment.newInstance();
-                    break;
-                case 3:
-                    fragment = MainFragment.newInstance();
-                    break;
+            try {
+                Method method = tabEntry.cls.getDeclaredMethod("newInstance");
+                Object invoke = method.invoke(null);
+                fragment = (Fragment) invoke;
+            } catch (Exception e) {
+                Logger.e(Log.getStackTraceString(e));
             }
-            mFragments[index] = fragment;
+            tabEntry.fragment = fragment;
         }
 
         return fragment;

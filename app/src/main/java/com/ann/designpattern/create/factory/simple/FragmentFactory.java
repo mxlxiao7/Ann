@@ -3,7 +3,9 @@ package com.ann.designpattern.create.factory.simple;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
+import com.ann.function.io.nio.NIOFragment;
 import com.ann.function.rx.RxFragment;
+import com.ann.function.thread.ThreadFragment;
 
 /**
  * 简单工厂类
@@ -27,16 +29,6 @@ public class FragmentFactory {
             "Sort-SortHeap",
             "Sort-SortQuick",
             "Data-Structure",
-            "Groovy",
-            "Thread",
-            "Thread-DeadLock",
-            "Thread-ForkJoinTask",
-            "Thread-ThreadPool",
-            "Thread-JniPosix",
-            "Rx",
-            "Lambda",
-            "Decorator",
-            "Try Catch Condition",
             "DP-MethodFactory",
             "DP-AbstractFactory ",
             "DP-Builder",
@@ -49,22 +41,32 @@ public class FragmentFactory {
             "DP-Component",
             "DP-Chain",
             "DP-TemplateMethod",
-            "View-Step",
-            "View-DataBinding",
-            "Net-Okhttp",
+            "Fun-NIO",
+            "Fun-Groovy",
+            "Fun-Thread",
+            "Fun-Thread-ForkJoinTask",
+            "Fun-Thread-ThreadPool",
+            "Fun-Thread-JniPosix",
+            "Fun-Rx",
+            "Fun-Lambda",
+            "Fun-Decorator",
+            "Fun-Try Catch Condition",
+            "Fun-View-Step",
+            "Fun-View-DataBinding",
+            "Fun-Net-Okhttp",
+            "Fun-Launch-Mode",
+            "Fun-Broad-Cast",
             "Fun-Leaks",
-            "Launch-Mode",
-            "Broad-Cast",
             "Fun-Memory",
             "Fun-StaticInitIndex",
             "Fun-MultipleExtends",
             "Fun-Volatile",
-            "FUN-Aidl",
+            "Fun-Aidl",
             "Fun-NDK",
-            "FUN-NDK-Split-Merge",
-            "FUN-NDK-Bsdiff-Patch",
-            "FUN-NDK-Hotfix",
-            "FUN-NDK-Openespaly"
+            "Fun-NDK-Split-Merge",
+            "Fun-NDK-Bsdiff-Patch",
+            "Fun-NDK-Hotfix",
+            "Fun-NDK-Openespaly"
 
     };
 
@@ -110,15 +112,15 @@ public class FragmentFactory {
 //            case "Sort-SortQuick":
 //                f = SortFragment.newInstance(new SortQuick());
 //                break;
+            case "Fun-NIO":
+                f = NIOFragment.newInstance();
+                break;
 //            case "Groovy":
 //                f = GroovyFragment.newInstance();
 //                break;
-//            case "Thread":
-//                f = ThreadFragment.newInstance();
-//                break;
-//            case "Thread-DeadLock":
-//                f = DeadLockFragment.newInstance();
-//                break;
+            case "Fun-Thread":
+                f = ThreadFragment.newInstance();
+                break;
 //            case "Thread-ForkJoinTask":
 //                f = ForkJoinTaskFragment.newInstance();
 //                break;
@@ -128,9 +130,9 @@ public class FragmentFactory {
 //            case "Thread-JniPosix":
 //                f = JniPosixFragment.newInstance();
 //                break;
-            case "Rx":
+            case "Fun-Rx":
                 f = RxFragment.newInstance();
-//                break;
+                break;
 //            case "Lambda":
 //                f = LambdaFragment.newInstance();
 //                break;

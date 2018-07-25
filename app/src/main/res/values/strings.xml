@@ -10,6 +10,20 @@
     <string name="function_empty_text">暂无数据</string>
     <string name="common_clean">清除</string>
     <string name="common_exe">执行</string>
+    <string name="text_terminate">中断锁</string>
+    <string name="text_deadlock">死锁</string>
+    <string name="text_reentrantlock">ReentrantLock</string>
+    <string name="text_p_c">生产者-消费者模式</string>
+    <string name="text_cyclicbarrier">CyclicBarrier</string>
+    <string name="text_semaphore">Semaphore</string>
+    <string name="text_phaser">Phaser</string>
+    <string name="text_countdownlatch">CountDownLatch</string>
+    <string name="text_exchanger">Exchanger</string>
 
-
+    <string name="text_copy">复制文件</string>
+    <string name="text_use_filechannel">使用FileChannel</string>
+    <string name="text_use_buffer">Buffer</string>
+    <string name="text_use_transfer">数据传输</string>
+    <string name="text_use_pipe">Pipe</string>
+    <string name="text_use_socketchannel">SocketChannel</string>
 </resources>

@@ -14,8 +14,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/clear"
@@ -23,9 +22,34 @@
                 android:text="@string/common_clean" />
 
             <Button
-                android:id="@+id/btn"
+                android:id="@+id/btn0"
                 style="@style/btn.style"
-                android:text="@string/common_exe" />
+                android:text="@string/text_copy" />
+
+            <Button
+                android:id="@+id/btn1"
+                style="@style/btn.style"
+                android:text="@string/text_use_filechannel" />
+
+            <Button
+                android:id="@+id/btn2"
+                style="@style/btn.style"
+                android:text="@string/text_use_buffer" />
+
+            <Button
+                android:id="@+id/btn3"
+                style="@style/btn.style"
+                android:text="@string/text_use_transfer" />
+
+            <Button
+                android:id="@+id/btn4"
+                style="@style/btn.style"
+                android:text="@string/text_use_pipe" />
+
+            <Button
+                android:id="@+id/btn5"
+                style="@style/btn.style"
+                android:text="@string/text_use_socketchannel" />
 
         </LinearLayout>
     </HorizontalScrollView>

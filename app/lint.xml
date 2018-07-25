@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+
+    <issue id="IconMissingDensityFolder" severity="ignore" />
+    <issue id="UnusedIds" severity="ignore"/>
+    <issue id="ContentDescription" severity="ignore"/>
+    <issue id="SelectableText" severity="ignore"/>
+    <issue id="ConvertToWebp" severity="ignore"/>
+    <issue id="IconDensities" severity="ignore"/>
+    <issue id="CheckResult" severity="ignore"/>
+    <issue id="CheckResult" severity="ignore"/>
+
+    <!-- Change the severity of hardcoded strings to "error" -->
+    <issue id="HardcodedText" severity="error" />
+
+</lint>

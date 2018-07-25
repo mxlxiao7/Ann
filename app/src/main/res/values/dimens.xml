@@ -27,7 +27,8 @@
     <dimen name="btn_margin_t_b">3dip</dimen>
     <dimen name="btn_margin_l_r">8dip</dimen>
     <dimen name="btn_h">35dip</dimen>
-
+    <dimen name="common_info_text_size">14sp</dimen>
+    <dimen name="common_scroll_margin_top">15dip</dimen>
 
 
 </resources>

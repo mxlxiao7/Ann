@@ -26,4 +26,12 @@
     <string name="text_use_transfer">数据传输</string>
     <string name="text_use_pipe">Pipe</string>
     <string name="text_use_socketchannel">SocketChannel</string>
+
+    <string name="text_start">启动</string>
+    <string name="text_send">发送</string>
+    <string name="text_stop">停止</string>
+
+    <string name="text_bio">bio</string>
+    <string name="text_nio">nio</string>
+    <string name="text_aio">aio</string>
 </resources>

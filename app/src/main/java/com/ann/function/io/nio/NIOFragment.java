@@ -12,10 +12,6 @@ import android.widget.Toast;
 
 import com.ann.BaseFragment;
 import com.ann.R;
-import com.ann.function.thread.cylicbarrier.CylicBarrierDemo;
-import com.ann.function.thread.exchanger.ExchangerDemo;
-import com.ann.function.thread.phaser.PhaserDemo;
-import com.ann.function.thread.semaphore.SemaphoreDemo;
 import com.ann.utils.Utils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -30,6 +26,7 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.Pipe;
+import java.util.Random;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -64,7 +61,8 @@ public class NIOFragment extends BaseFragment {
     private Button mBtn3;
     private Button mBtn4;
     private Button mBtn5;
-
+    private Button mBtn6;
+    private Button mBtn7;
 
     public NIOFragment() {
     }
@@ -125,6 +123,12 @@ public class NIOFragment extends BaseFragment {
 
         mBtn5 = rootView.findViewById(R.id.btn5);
         mBtn5.setOnClickListener(view -> action5());
+
+        mBtn6 = rootView.findViewById(R.id.btn6);
+        mBtn6.setOnClickListener(view -> action6());
+
+        mBtn7 = rootView.findViewById(R.id.btn7);
+        mBtn7.setOnClickListener(view -> action7());
 
         return rootView;
     }
@@ -452,15 +456,47 @@ public class NIOFragment extends BaseFragment {
     }
 
     /**
-     * 在用nio通讯的过程我用以下情景给你模拟：
-     * 1、学校(ServerSocketChannel)
-     * 2、学校教务处（Selector）
-     * 3、老师 (ServerSocket )
-     * 4、学生 (SocketChannel)
-     * 5、员工号/学生号（SelectionKey）
+     * 启动服务端
      */
     public void action5() {
+        Server.start();
 
+        //避免客户端先于服务器启动前执行代码
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            Utils.msg(Log.getStackTraceString(e));
+        }
 
+        Client.start();
     }
+
+    /**
+     * 发送数据
+     */
+    public void action6() {
+        new Thread(() -> {
+            //运行客户端
+            char operators[] = {'+', '-', '*', '/'};
+            Random random = new Random(System.currentTimeMillis());
+            //随机产生算术表达式
+            String expression = random.nextInt(10) + "" + operators[random.nextInt(4)] + (random.nextInt(10) + 1);
+            try {
+                Client.sendMsg(expression);
+            } catch (Exception e) {
+                Utils.msg(Log.getStackTraceString(e));
+            }
+        }).start();
+    }
+
+    /**
+     * 停止服务端
+     */
+    public void action7() {
+        new Thread(() -> {
+            Client.stop();
+            Server.stop();
+        }).start();
+    }
+
 }

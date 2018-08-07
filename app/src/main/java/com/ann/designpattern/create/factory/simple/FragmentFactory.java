@@ -3,6 +3,9 @@ package com.ann.designpattern.create.factory.simple;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
+import com.ann.function.io.IOFragment;
+import com.ann.function.io.aio.AIOFragment;
+import com.ann.function.io.bio.BIOFragment;
 import com.ann.function.io.nio.NIOFragment;
 import com.ann.function.rx.RxFragment;
 import com.ann.function.thread.ThreadFragment;
@@ -41,7 +44,7 @@ public class FragmentFactory {
             "DP-Component",
             "DP-Chain",
             "DP-TemplateMethod",
-            "Fun-NIO",
+            "Fun-IO",
             "Fun-Groovy",
             "Fun-Thread",
             "Fun-Thread-ForkJoinTask",
@@ -68,6 +71,13 @@ public class FragmentFactory {
             "Fun-NDK-Hotfix",
             "Fun-NDK-Openespaly"
 
+    };
+
+
+    public static final String[] SUB_TITLES = new String[]{
+            "Fun-BIO",
+            "Fun-NIO",
+            "Fun-AIO",
     };
 
 
@@ -112,8 +122,17 @@ public class FragmentFactory {
 //            case "Sort-SortQuick":
 //                f = SortFragment.newInstance(new SortQuick());
 //                break;
+            case "Fun-IO":
+                f = IOFragment.newInstance();
+                break;
+            case "Fun-BIO":
+                f = BIOFragment.newInstance();
+                break;
             case "Fun-NIO":
                 f = NIOFragment.newInstance();
+                break;
+            case "Fun-AIO":
+                f = AIOFragment.newInstance();
                 break;
 //            case "Groovy":
 //                f = GroovyFragment.newInstance();

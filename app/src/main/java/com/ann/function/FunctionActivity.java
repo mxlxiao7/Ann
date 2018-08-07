@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ann.BaseActivity;
 import com.ann.R;
@@ -27,9 +28,9 @@ public class FunctionActivity extends BaseActivity {
 
     private FrameLayout mFragmentContainer;
     private ImageView mBackIV;
-
     private String mTitle;
-    private View mEmptyTV;
+    private TextView mEmptyTV;
+    private TextView mTitleTV;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,8 @@ public class FunctionActivity extends BaseActivity {
         mBackIV.setVisibility(View.VISIBLE);
         mBackIV.setOnClickListener(this::back);
         mEmptyTV = findViewById(R.id.tv_empty);
+        mTitleTV = findViewById(R.id.tv_title);
+        mTitleTV.setText(mTitle);
 
         Fragment fragment = FragmentFactory.createFragment(mTitle);
 
@@ -74,7 +77,6 @@ public class FunctionActivity extends BaseActivity {
             mEmptyTV.setVisibility(View.GONE);
             mFragmentContainer.setVisibility(View.VISIBLE);
         }
-
     }
 
     /**

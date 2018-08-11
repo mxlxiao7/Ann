@@ -30,6 +30,11 @@
             android:layout_marginTop="10dp"
             android:text="@string/text_aio" />
 
+        <Button
+            android:id="@+id/btn3"
+            style="@style/btn.style"
+            android:layout_marginTop="10dp"
+            android:text="@string/text_okio" />
     </LinearLayout>
 
 </RelativeLayout>

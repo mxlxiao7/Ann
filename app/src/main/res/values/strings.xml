@@ -34,4 +34,13 @@
     <string name="text_bio">bio</string>
     <string name="text_nio">nio</string>
     <string name="text_aio">aio</string>
+    <string name="text_okio">okio</string>
+
+
+    <string name="text_read_write">文件读写</string>
+    <string name="text_append">文件内容的追</string>
+    <string name="text_with_path">通过路径来读写文件</string>
+    <string name="text_write_buffer">写buffer</string>
+    <string name="text_read_buffer">读buffer</string>
+
 </resources>

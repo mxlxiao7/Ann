@@ -100,38 +100,38 @@ public class AIOFragment extends BaseFragment {
      * 启动服务端
      */
     public void action0() {
-        //运行服务器
-        new Thread(() -> Server.start()).start();
-
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            Utils.msg(Log.getStackTraceString(e));
-        }
-
-        //运行客户端
-        new Thread(() -> Client.start()).start();
+//        //运行服务器
+//        new Thread(() -> Server.start()).start();
+//
+//        try {
+//            Thread.sleep(100);
+//        } catch (InterruptedException e) {
+//            Utils.msg(Log.getStackTraceString(e));
+//        }
+//
+//        //运行客户端
+//        new Thread(() -> Client.start()).start();
     }
 
     /**
      * 客户端发送
      */
     public void action1() {
-        new Thread(() -> {
-            //运行客户端
-            char operators[] = {'+', '-', '*', '/'};
-            Random random = new Random(System.currentTimeMillis());
-            //随机产生算术表达式
-            String expression = random.nextInt(10) + "" + operators[random.nextInt(4)] + (random.nextInt(10) + 1);
-            Client.send(expression);
-        }).start();
+//        new Thread(() -> {
+//            //运行客户端
+//            char operators[] = {'+', '-', '*', '/'};
+//            Random random = new Random(System.currentTimeMillis());
+//            //随机产生算术表达式
+//            String expression = random.nextInt(10) + "" + operators[random.nextInt(4)] + (random.nextInt(10) + 1);
+//            Client.send(expression);
+//        }).start();
     }
 
     /**
      * 停止
      */
     public void action2() {
-        new Thread(() -> Client.stop()).start();
-        new Thread(() -> Server.stop()).start();
+//        new Thread(() -> Client.stop()).start();
+//        new Thread(() -> Server.stop()).start();
     }
 }

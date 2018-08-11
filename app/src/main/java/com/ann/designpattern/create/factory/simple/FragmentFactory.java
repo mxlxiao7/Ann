@@ -7,6 +7,7 @@ import com.ann.function.io.IOFragment;
 import com.ann.function.io.aio.AIOFragment;
 import com.ann.function.io.bio.BIOFragment;
 import com.ann.function.io.nio.NIOFragment;
+import com.ann.function.io.okio.OKIOFragment;
 import com.ann.function.rx.RxFragment;
 import com.ann.function.thread.ThreadFragment;
 
@@ -78,6 +79,7 @@ public class FragmentFactory {
             "Fun-BIO",
             "Fun-NIO",
             "Fun-AIO",
+            "Fun-OKIO",
     };
 
 
@@ -133,6 +135,9 @@ public class FragmentFactory {
                 break;
             case "Fun-AIO":
                 f = AIOFragment.newInstance();
+                break;
+            case "Fun-OKIO":
+                f = OKIOFragment.newInstance();
                 break;
 //            case "Groovy":
 //                f = GroovyFragment.newInstance();

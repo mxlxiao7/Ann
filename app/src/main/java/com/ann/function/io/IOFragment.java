@@ -25,6 +25,7 @@ public class IOFragment extends BaseFragment {
     private Button mBtn0;
     private Button mBtn1;
     private Button mBtn2;
+    private Button mBtn3;
 
     public IOFragment() {
     }
@@ -62,6 +63,9 @@ public class IOFragment extends BaseFragment {
 
         mBtn2 = rootView.findViewById(R.id.btn2);
         mBtn2.setOnClickListener(view -> start(FragmentFactory.SUB_TITLES[2]));
+
+        mBtn3 = rootView.findViewById(R.id.btn3);
+        mBtn3.setOnClickListener(view -> start(FragmentFactory.SUB_TITLES[3]));
         return rootView;
     }
 

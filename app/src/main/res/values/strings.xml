@@ -10,6 +10,7 @@
     <string name="function_empty_text">暂无数据</string>
     <string name="common_clean">清除</string>
     <string name="common_exe">执行</string>
+    <string name="common_stop">停止</string>
     <string name="text_terminate">中断锁</string>
     <string name="text_deadlock">死锁</string>
     <string name="text_reentrantlock">ReentrantLock</string>

@@ -8,6 +8,7 @@ import com.ann.function.io.aio.AIOFragment;
 import com.ann.function.io.bio.BIOFragment;
 import com.ann.function.io.nio.NIOFragment;
 import com.ann.function.io.okio.OKIOFragment;
+import com.ann.function.ping.PingFragment;
 import com.ann.function.rx.RxFragment;
 import com.ann.function.thread.ThreadFragment;
 
@@ -66,11 +67,12 @@ public class FragmentFactory {
             "Fun-MultipleExtends",
             "Fun-Volatile",
             "Fun-Aidl",
+            "Fun-Ping",
             "Fun-NDK",
             "Fun-NDK-Split-Merge",
             "Fun-NDK-Bsdiff-Patch",
             "Fun-NDK-Hotfix",
-            "Fun-NDK-Openespaly"
+            "Fun-NDK-Openespaly",
 
     };
 
@@ -238,6 +240,9 @@ public class FragmentFactory {
 //            case "FUN-Aidl":
 //                f = AidlFragment.newInstance();
 //                break;
+            case "Fun-Ping":
+                f = PingFragment.newInstance();
+                break;
 //            case "Fun-NDK":
 //                f = NDKFragment.newInstance();
 //                break;

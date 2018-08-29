@@ -6,6 +6,7 @@ import com.ann.utils.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.CountDownLatch;
 
 
 /**
@@ -20,7 +21,7 @@ public class CountDownLatchDemo {
     public static void main() throws InterruptedException {
         Utils.msg("主任务开始执行 ");
 
-        java.util.concurrent.CountDownLatch latch = new java.util.concurrent.CountDownLatch(2);//两个工人的协作
+        CountDownLatch latch = new CountDownLatch(2);//两个工人的协作
         Worker worker1 = new Worker("zhang san", 5000, latch);
         Worker worker2 = new Worker("li si", 8000, latch);
         worker1.start();//

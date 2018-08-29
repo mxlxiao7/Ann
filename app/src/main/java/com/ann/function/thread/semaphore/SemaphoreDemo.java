@@ -7,6 +7,7 @@ import com.ann.utils.Utils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 
 /**
  * 控制同时执行任务数量
@@ -24,7 +25,7 @@ public class SemaphoreDemo {
     /**
      * 只允许2个线程同时访问
      */
-    private java.util.concurrent.Semaphore semp = new java.util.concurrent.Semaphore(2);
+    private Semaphore semp = new Semaphore(2);
 
 
     public static void main() {

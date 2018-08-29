@@ -2,6 +2,8 @@ package com.ann.function.thread.phaser;
 
 import com.ann.utils.Utils;
 
+import java.util.concurrent.Phaser;
+
 
 /**
  * Phaser是一个更强大的、更复杂的同步辅助类，可以代替CyclicBarrier CountDownLatch的功能，但是比他们更强大,
@@ -23,7 +25,7 @@ public class PhaserDemo {
      * 开启3个线程，分别打印字母a,b,c各10次，然后进入下一阶段打印后面的字母d,e,f各10次，然后再进入下一阶段.......以此类推，直到整个字母表全部打印完毕。
      */
     public void doAction() {
-        java.util.concurrent.Phaser phaser = new java.util.concurrent.Phaser(3) {// 共有3个工作线程，因此在构造函数中赋值为3
+        Phaser phaser = new Phaser(3) {// 共有3个工作线程，因此在构造函数中赋值为3
 
             /**
              *

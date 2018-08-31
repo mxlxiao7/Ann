@@ -6,6 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
 
     compileSdkVersion 28
+    buildToolsVersion '28.0.2'
 
     defaultConfig {
         applicationId "com.ann"
@@ -104,11 +105,12 @@ android {
         // 指定问题的规则生成警告
         // warning 'ResourceAsColor'
     }
+
+
 }
 
 dependencies {
-
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -119,15 +121,16 @@ dependencies {
      */
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.1.1'
+
     //noinspection GradleCompatible
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 
     //logger
     implementation 'com.orhanobut:logger:2.2.0'
-//    implementation 'com.android.tools.lint:lint:25.3.0'
-//    implementation 'com.android.tools.lint:lint-api:25.3.0'
-//    implementation 'com.android.tools.lint:lint-checks:25.3.0'
+    //    implementation 'com.android.tools.lint:lint:25.3.0'
+    //    implementation 'com.android.tools.lint:lint-api:25.3.0'
+    //    implementation 'com.android.tools.lint:lint-checks:25.3.0'
 
     //eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'
@@ -144,11 +147,8 @@ dependencies {
 
     //okio
     implementation 'com.squareup.okio:okio:1.15.0'
-
-
-
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-//    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    //    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }
 
 /**

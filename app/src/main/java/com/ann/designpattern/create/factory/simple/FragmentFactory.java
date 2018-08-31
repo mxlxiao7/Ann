@@ -8,6 +8,7 @@ import com.ann.function.io.aio.AIOFragment;
 import com.ann.function.io.bio.BIOFragment;
 import com.ann.function.io.nio.NIOFragment;
 import com.ann.function.io.okio.OKIOFragment;
+import com.ann.function.lambda.LambdaFragment;
 import com.ann.function.ping.PingFragment;
 import com.ann.function.rx.RxFragment;
 import com.ann.function.thread.ThreadFragment;
@@ -159,9 +160,9 @@ public class FragmentFactory {
             case "Fun-Rx":
                 f = RxFragment.newInstance();
                 break;
-//            case "Lambda":
-//                f = LambdaFragment.newInstance();
-//                break;
+            case "Fun-Lambda":
+                f = LambdaFragment.newInstance();
+                break;
 //            case "Decorator":
 //                f = DecoratorFragment.newInstance();
 //                break;

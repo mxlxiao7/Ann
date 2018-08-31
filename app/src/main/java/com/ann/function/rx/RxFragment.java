@@ -41,7 +41,6 @@ import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
@@ -212,7 +211,6 @@ public class RxFragment extends BaseFragment {
         } while (false);
     }
 
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void helloEventBus(String message) {
         s.append(message).append("\n");
@@ -361,12 +359,19 @@ public class RxFragment extends BaseFragment {
                         Utils.msg("预处理" + s);
                     }
                 })
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) {
-                        Utils.msg("处理:" + s);
-                    }
-                });
+                .subscribe(
+                        new Consumer<String>() {
+                            @Override
+                            public void accept(String s) {
+                                Utils.msg("处理:" + s);
+                            }
+                        },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                Utils.msg(Log.getStackTraceString(throwable));
+                            }
+                        });
     }
     /******************************基础使用 end*************************************/
 
@@ -385,17 +390,19 @@ public class RxFragment extends BaseFragment {
                         return s + " 追加内容";
                     }
                 })
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) {
-                        Utils.msg(s);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
+                .subscribe(
+                        new Consumer<String>() {
+                            @Override
+                            public void accept(String s) {
+                                Utils.msg(s);
+                            }
+                        },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) {
 
-                    }
-                });
+                            }
+                        });
     }
 
 
@@ -416,12 +423,19 @@ public class RxFragment extends BaseFragment {
                         return integer.toString();
                     }
                 })
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) {
-                        Utils.msg(s);
-                    }
-                });
+                .subscribe(
+                        new Consumer<String>() {
+                            @Override
+                            public void accept(String s) {
+                                Utils.msg(s);
+                            }
+                        },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                Utils.msg(Log.getStackTraceString(throwable));
+                            }
+                        });
     }
 
     /**
@@ -447,12 +461,19 @@ public class RxFragment extends BaseFragment {
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(@NonNull String s) {
-                        Utils.msg("flatMap : accept : " + s);
-                    }
-                });
+                .subscribe(
+                        new Consumer<String>() {
+                            @Override
+                            public void accept(@NonNull String s) {
+                                Utils.msg("flatMap : accept : " + s);
+                            }
+                        },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                Utils.msg(Log.getStackTraceString(throwable));
+                            }
+                        });
     }
 
     /**
@@ -462,21 +483,25 @@ public class RxFragment extends BaseFragment {
      * 例如用户注册成功后需要自动登录，我们只需要先通过注册接口注册用户信息，注册成功后马上调用登录接口进行自动登录即可。
      */
     private void rx8() {
-        Observable.create((ObservableOnSubscribe<RxUser>) emitter -> {
-            //模拟网络操作请求 RxUser
-            RxUser data = new RxUser();
-            emitter.onNext(data);
-        }).subscribeOn(Schedulers.io())
+        Observable.create(
+                (ObservableOnSubscribe<RxUser>) emitter -> {
+                    //模拟网络操作请求 RxUser
+                    RxUser data = new RxUser();
+                    emitter.onNext(data);
+                })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(rxUser -> {
-                    //在这里做一些数据加工操作
-                    Utils.msg("doOnNext : accept : " + rxUser.name);
-                })
+                .doOnNext(
+                        rxUser -> {
+                            //在这里做一些数据加工操作
+                            Utils.msg("doOnNext : accept : " + rxUser.name);
+                        })
                 .observeOn(Schedulers.io())
-                .flatMap((Function<RxUser, ObservableSource<RxCar>>) rxUser -> {
-                    //在这里做二级加载动作
-                    return Observable.create(emitter -> emitter.onNext(rxUser.car));
-                })
+                .flatMap(
+                        (Function<RxUser, ObservableSource<RxCar>>) rxUser -> {
+                            //在这里做二级加载动作
+                            return Observable.create(emitter -> emitter.onNext(rxUser.car));
+                        })
                 .subscribe(
                         car -> Utils.msg("accept: success ：" + car.toString()),
                         throwable -> Utils.msg("accept: error :" + throwable.getMessage()));
@@ -487,31 +512,41 @@ public class RxFragment extends BaseFragment {
      * concatMap 保证了顺序
      */
     private void rx9() {
-        Observable.create(new ObservableOnSubscribe<Integer>() {
-            @Override
-            public void subscribe(@NonNull ObservableEmitter<Integer> e) {
-                e.onNext(1);
-                e.onNext(2);
-                e.onNext(3);
-            }
-        }).concatMap(new Function<Integer, ObservableSource<String>>() {
-            @Override
-            public ObservableSource<String> apply(@NonNull Integer integer) {
-                List<String> list = new ArrayList<>();
-                for (int i = 0; i < 3; i++) {
-                    list.add("I am value " + integer);
-                }
-                int delayTime = (int) (1 + Math.random() * 10);
-                return Observable.fromIterable(list).delay(delayTime, TimeUnit.MILLISECONDS);
-            }
-        }).subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
+        Observable.create(
+                new ObservableOnSubscribe<Integer>() {
                     @Override
-                    public void accept(@NonNull String s) {
-                        Utils.msg("concatMap : accept : " + s);
+                    public void subscribe(@NonNull ObservableEmitter<Integer> e) {
+                        e.onNext(1);
+                        e.onNext(2);
+                        e.onNext(3);
                     }
-                });
+                })
+                .concatMap(
+                        new Function<Integer, ObservableSource<String>>() {
+                            @Override
+                            public ObservableSource<String> apply(@NonNull Integer integer) {
+                                List<String> list = new ArrayList<>();
+                                for (int i = 0; i < 3; i++) {
+                                    list.add("I am value " + integer);
+                                }
+                                int delayTime = (int) (1 + Math.random() * 10);
+                                return Observable.fromIterable(list).delay(delayTime, TimeUnit.MILLISECONDS);
+                            }
+                        }).subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        new Consumer<String>() {
+                            @Override
+                            public void accept(@NonNull String s) {
+                                Utils.msg("concatMap : accept : " + s);
+                            }
+                        },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                Utils.msg(Log.getStackTraceString(throwable));
+                            }
+                        });
     }
 
 
@@ -645,26 +680,12 @@ public class RxFragment extends BaseFragment {
             }
         }, BackpressureStrategy.BUFFER);
 
-
-        Flowable.zip(f1, f2, new BiFunction<RxUser, RxMain, String>() {
-            @Override
-            public String apply(RxUser rxUser, RxMain rxMain) {
-                return "合并后的数据为：姓名:" + rxUser.name + " 内容:" + rxMain.feed;
-            }
-        })
+        Flowable.zip(f1, f2, (rxUser, rxMain) -> "合并后的数据为：姓名:" + rxUser.name + " 内容:" + rxMain.feed)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) {
-                        Utils.msg("accept: 成功：" + s + "\n");
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
-                        Utils.msg("accept: 失败：" + throwable + "\n");
-                    }
-                });
+                .subscribe(
+                        s -> Utils.msg("accept: 成功：" + s + "\n"),
+                        throwable -> Utils.msg("accept: 失败：" + throwable + "\n"));
 
     }
 
@@ -681,12 +702,9 @@ public class RxFragment extends BaseFragment {
                         return integer >= 5;
                     }
                 })
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) {
-                        Utils.msg(integer.toString());
-                    }
-                });
+                .subscribe(
+                        integer -> Utils.msg(integer.toString()),
+                        throwable -> Utils.msg(Log.getStackTraceString(throwable)));
     }
 
     /**
@@ -697,9 +715,9 @@ public class RxFragment extends BaseFragment {
         Utils.msg("----想要2个数据:----");
         Flowable.fromArray(1, 2, 3, 4)
                 .take(2)
-                .subscribe(integer -> {
-                    Utils.msg(integer.toString());
-                });
+                .subscribe(
+                        integer -> Utils.msg(integer.toString()),
+                        throwable -> Utils.msg(Log.getStackTraceString(throwable)));
     }
 
     /**
@@ -708,12 +726,9 @@ public class RxFragment extends BaseFragment {
     private void rx16() {
         Utils.msg("----接收到数据前记录日志:----");
         Flowable.range(1, 9)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) {
-                        Utils.msg("处理:" + integer);
-                    }
-                });
+                .subscribe(
+                        integer -> Utils.msg("处理:" + integer),
+                        throwable -> Utils.msg(Log.getStackTraceString(throwable)));
     }
 
     /**
@@ -722,13 +737,15 @@ public class RxFragment extends BaseFragment {
     private void rx17() {
         Observable.just(1, 2, 3, 4, 5)
                 .buffer(3, 2)
-                .subscribe(integers -> {
-                    Utils.msg("buffer size : " + integers.size());
-                    Utils.msg("buffer value : ");
-                    for (Integer i : integers) {
-                        Utils.msg(i + "");
-                    }
-                }, throwable -> Utils.msg("accept: error :" + throwable.getMessage()));
+                .subscribe(
+                        integers -> {
+                            Utils.msg("buffer size : " + integers.size());
+                            Utils.msg("buffer value : ");
+                            for (Integer i : integers) {
+                                Utils.msg(i + "");
+                            }
+                        },
+                        throwable -> Utils.msg("accept: error :" + throwable.getMessage()));
     }
 
     /**
@@ -739,7 +756,8 @@ public class RxFragment extends BaseFragment {
         Flowable.timer(2, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()) // timer 默认在新线程，所以需要切换回主线程
-                .subscribe(time -> Utils.msg("timer :" + time + " at " + System.currentTimeMillis()),
+                .subscribe(
+                        time -> Utils.msg("timer :" + time + " at " + System.currentTimeMillis()),
                         throwable -> Utils.msg("timer accept: error :" + throwable.getMessage()));
 
     }
@@ -752,7 +770,8 @@ public class RxFragment extends BaseFragment {
         Disposable disposable = Flowable.interval(3, 2, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()) // timer 默认在新线程，所以需要切换回主线程
-                .subscribe(time -> Utils.msg("interval :" + time + " at " + System.currentTimeMillis()),
+                .subscribe(
+                        time -> Utils.msg("interval :" + time + " at " + System.currentTimeMillis()),
                         throwable -> Utils.msg("interval accept: error :" + throwable.getMessage()));
 
         //这里定时器会一直执行，当我们需要销毁的时候调用下面方法
@@ -872,12 +891,9 @@ public class RxFragment extends BaseFragment {
         //这里defaultItem是什么意思?
         Observable.just(1, 2, 3, 4, 5)
                 .last(0)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(@NonNull Integer integer) {
-                        Utils.msg("last : " + integer);
-                    }
-                });
+                .subscribe(
+                        integer -> Utils.msg("last : " + integer),
+                        throwable -> Utils.msg(Log.getStackTraceString(throwable)));
     }
 
 
@@ -887,12 +903,9 @@ public class RxFragment extends BaseFragment {
      */
     private void rx26() {
         Observable.merge(Observable.just(1, 2), Observable.just(3, 4, 5))
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(@NonNull Integer integer) {
-                        Utils.msg("accept: merge :" + integer);
-                    }
-                });
+                .subscribe(
+                        integer -> Utils.msg("accept: merge :" + integer),
+                        throwable -> Utils.msg(Log.getStackTraceString(throwable)));
 
     }
 
@@ -901,17 +914,10 @@ public class RxFragment extends BaseFragment {
      */
     private void rx27() {
         Observable.just(1, 2, 3)
-                .reduce(new BiFunction<Integer, Integer, Integer>() {
-                    @Override
-                    public Integer apply(@NonNull Integer integer, @NonNull Integer integer2) {
-                        return integer + integer2;
-                    }
-                }).subscribe(new Consumer<Integer>() {
-            @Override
-            public void accept(@NonNull Integer integer) {
-                Utils.msg("accept: reduce : " + integer);
-            }
-        });
+                .reduce((integer, integer2) -> integer + integer2)
+                .subscribe(
+                        integer -> Utils.msg("accept: reduce : " + integer),
+                        throwable -> Utils.msg(Log.getStackTraceString(throwable)));
     }
 
     /**
@@ -919,17 +925,10 @@ public class RxFragment extends BaseFragment {
      */
     private void rx28() {
         Observable.just(1, 2, 3)
-                .scan(new BiFunction<Integer, Integer, Integer>() {
-                    @Override
-                    public Integer apply(@NonNull Integer integer, @NonNull Integer integer2) {
-                        return integer + integer2;
-                    }
-                }).subscribe(new Consumer<Integer>() {
-            @Override
-            public void accept(@NonNull Integer integer) {
-                Utils.msg("accept: scan " + integer);
-            }
-        });
+                .scan((integer, integer2) -> integer + integer2)
+                .subscribe(
+                        integer -> Utils.msg("accept: scan " + integer),
+                        throwable -> Utils.msg(Log.getStackTraceString(throwable)));
     }
 
     /**
@@ -942,20 +941,17 @@ public class RxFragment extends BaseFragment {
                 .window(3, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Observable<Long>>() {
-                    @Override
-                    public void accept(@NonNull Observable<Long> longObservable) {
-                        Utils.msg("Sub Divide begin...");
-                        longObservable.subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Consumer<Long>() {
-                                    @Override
-                                    public void accept(@NonNull Long aLong) {
-                                        Utils.msg("Next:" + aLong);
-                                    }
-                                });
-                    }
-                });
+                .subscribe(
+                        longObservable -> {
+                            Utils.msg("Sub Divide begin...");
+                            longObservable.subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(
+                                            aLong -> Utils.msg("Next:" + aLong),
+                                            throwable -> Utils.msg(Log.getStackTraceString(throwable)));
+                        },
+                        throwable -> Utils.msg(Log.getStackTraceString(throwable))
+                );
     }
 
 
@@ -963,25 +959,17 @@ public class RxFragment extends BaseFragment {
      * fromIterable
      */
     private void rx30() {
-        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> list = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             list.add(i);
         }
 
         //from形式
         Flowable.fromIterable(list)
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(@NonNull Integer integer) {
-                        Utils.msg(integer.toString());
-                    }
-                });
-
+                .subscribe(integer -> Utils.msg(integer.toString()));
 
         Flowable.just(list)
-                .subscribe(nums -> {
-                    Observable.fromIterable(nums).subscribe(num -> Utils.msg(num.toString()));
-                });
+                .subscribe(nums -> Observable.fromIterable(nums).subscribe(num -> Utils.msg(num.toString())));
     }
 
 

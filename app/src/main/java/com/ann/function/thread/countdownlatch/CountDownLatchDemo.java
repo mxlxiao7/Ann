@@ -6,6 +6,7 @@ import com.ann.utils.Utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
 
@@ -16,7 +17,7 @@ import java.util.concurrent.CountDownLatch;
  * 给state设置值，每当一个任务执行完毕调用countDown()方法，这个值就减一，当最后为0时，主任务获取到执行权限，开始执行
  */
 public class CountDownLatchDemo {
-    final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
     public static void main() throws InterruptedException {
         Utils.msg("主任务开始执行 ");

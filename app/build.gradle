@@ -28,6 +28,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    signingConfigs {
+
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -35,7 +39,6 @@ android {
         }
 
         debug {
-
         }
 
         staging {

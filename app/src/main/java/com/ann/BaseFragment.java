@@ -8,6 +8,11 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+/**
+ * Fragment基类
+ *
+ * @param
+ */
 public abstract class BaseFragment extends Fragment {
 
 

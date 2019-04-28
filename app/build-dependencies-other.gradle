@@ -1,0 +1,14 @@
+dependencies {
+    //pulltorefresh
+    implementation project(path: ':pulltorefresh')
+
+    //状态数据管理
+    implementation 'com.github.frankiesardo:icepick:2.3.6'
+
+    /**
+     *
+     */
+    implementation('com.jaeger.statusbarutil:library:1.5.1') {
+        force = true
+    }
+}

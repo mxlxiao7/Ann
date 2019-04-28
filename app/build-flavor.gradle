@@ -1,0 +1,16 @@
+android {
+    productFlavors {
+//        meituan {
+//            buildConfigField("int", "xxx", "1")
+//            buildConfigField("String", "xx", wrap(""))
+//        }
+//        outer {
+//            buildConfigField("int", "xxx", "1")
+//            buildConfigField("String", "xx", wrap("xx"))
+//        }
+    }
+}
+
+static def wrap(value) {
+    return "\"" + value + "\""
+}

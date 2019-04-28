@@ -43,5 +43,6 @@
     <string name="text_with_path">通过路径来读写文件</string>
     <string name="text_write_buffer">写buffer</string>
     <string name="text_read_buffer">读buffer</string>
+    <string name="title_dynamic_feature">Module Title</string>
 
 </resources>

@@ -56,6 +56,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         super.onDestroy();
     }
 
+
     private void init() {
         mFragmentContainer = findViewById(R.id.ll_container);
         mNavigation = findViewById(R.id.navigation);

@@ -22,9 +22,8 @@
         <item name="android:layout_height">@dimen/btn_h</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:background">@drawable/btn_bottom_confirm_bg</item>
+        <item name="android:background">@drawable/ic_bottom_confirm_bg</item>
         <item name="android:layout_marginRight">10dip</item>
     </style>
-
 
 </resources>

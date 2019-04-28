@@ -1,0 +1,22 @@
+checkstyle {
+    toolVersion = "8.2"
+}
+
+task checkStyle(type: Checkstyle) {
+    configFile file("${project.projectDir}/checkstyle/checkstyle.xml")
+    configProperties.checkstyleSuppressionsPath = file("${project.projectDir}/checkstyle/suppressions.xml").absolutePath
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**', '**/test/java/**'
+    reports { // 支持html和xml两种报告形式，可以任选其一(html更具有可读性)
+        xml.enabled = false
+        html.enabled = true
+//        html.stylesheet resources.text.fromFile("${project.projectDir}/checkstyle/checkstyle-noframes-sorted.xml")
+        html.destination file("$reportsDir/checkstyle/checkstyle.html")
+    }
+    ignoreFailures = true // 忽略错误继续构建
+    classpath = files()
+}
+
+
+check.dependsOn 'checkStyle', 'lint'

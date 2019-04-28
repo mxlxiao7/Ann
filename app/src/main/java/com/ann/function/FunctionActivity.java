@@ -25,7 +25,6 @@ import com.ann.designpattern.create.factory.simple.FragmentFactory;
  */
 public class FunctionActivity extends BaseActivity {
 
-
     private FrameLayout mFragmentContainer;
     private ImageView mBackIV;
     private String mTitle;
@@ -77,6 +76,7 @@ public class FunctionActivity extends BaseActivity {
             mEmptyTV.setVisibility(View.GONE);
             mFragmentContainer.setVisibility(View.VISIBLE);
         }
+
     }
 
     /**

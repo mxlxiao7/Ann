@@ -1,26 +1,36 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
+apply from: 'build-plugin.gradle'
+apply from: 'build-flavor.gradle'
+apply from: 'build-check.gradle'
 
 android {
-
     compileSdkVersion 28
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.ann"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        multiDexKeepProguard file('multiDexKeep.pro') // keep specific classes using proguard syntax
+        multiDexKeepFile file('maindexlist.txt') // keep specific classes
+    }
 
-        /**
-         *  往BuildConfig 中添加参数
-         */
-        buildConfigField 'String', 'API_SERVER_URL', '"http://url/"'
+    dexOptions {//dex配置
+        javaMaxHeapSize "4g"
+        preDexLibraries = false
+        def listFile = project.rootDir.absolutePath + '/app/maindexlist.txt'
+        additionalParameters = [//dex参数详见 dx --help
+                                '--multi-dex',//多分包
+                                '--set-max-idx-number=1000',//每个包内方法数上限
+                                '--main-dex-list=' + listFile,//打包进主classes.dex的文件列表
+                                '--minimal-main-dex'//使上一句生效
+        ]
     }
 
     compileOptions {
@@ -34,133 +44,43 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            buildConfigField("boolean", "LOG_DEBUG", "false")
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
         debug {
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            defaultConfig {
+                ndk {
+                    // 设置支持的SO库架构
+                    abiFilters 'armeabi', 'x86' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+                }
+            }
         }
-
-        staging {
-            // Specifies a sorted list of fallback build types that the
-            // plugin should try to use when a dependency does not include a
-            // "staging" build type. You may specify as many fallbacks as you
-            // like, and the plugin selects the first build type that's
-            // available in the dependency.
-            matchingFallbacks = ['debug', 'qa', 'release']
-        }
-    }
-
-    dexOptions {
-        //声明是否预 dex 库依赖项以加快您的增量构建速度。由于此功能可能减慢您的干净构建的速度，您可能需要为持续性集成服务器停用此功能。
-        //preDexLibraries true
-        //设置运行 dex-in-process 时要使用的最大线程数量
-        maxProcessCount 8
-        //设置 DEX 编译器的最大堆大小。
-        //javaMaxHeapSize "2048m"
     }
 
     lintOptions {
-        // true--关闭lint报告的分析进度
-        quiet true
         // true--错误发生后停止gradle构建
-        abortOnError true
-        // true--只报告error
-        ignoreWarnings false
-        // true--忽略有错误的文件的全/绝对路径(默认是true)
-        absolutePaths true
-        // true--检查所有问题点，包含其他默认关闭项
-        checkAllWarnings true
-        // true--所有warning当做error
-        warningsAsErrors true
-        // 关闭指定问题检查
-        // disable
-        // 忽略指定问题的规则(同关闭检查)
-        // ignore
-        // 打开指定问题检查
-        // enable 'RtlHardcoded', 'RtlCompat', 'RtlEnabled'
-        // 仅检查指定问题
-        // check 'NewApi', 'InlinedApi'
-        // true--error输出文件不包含源码行号
-        noLines false
-        // true--显示错误的所有发生位置，不截取
-        showAll true
-        // 回退lint设置(默认规则)
-        // lintConfig file("default-lint.xml")
-        // true--生成txt格式报告(默认false)
-        textReport false
-        // 重定向输出；可以是文件或'stdout'
-        textOutput 'stdout'
-        // true--生成XML格式报告
-        xmlReport false
-        // 指定xml报告文档(默认lint-results.xml)
-        // xmlOutput file("lint-report.xml")
-        // true--生成HTML报告(带问题解释，源码位置，等)
-        htmlReport true
-        // html报告可选路径(构建器默认是lint-results.html )
-        // htmlOutput file("../lint-report.html")
-        //  true--所有正式版构建执行规则生成崩溃的lint检查，如果有崩溃问题将停止构建
-        checkReleaseBuilds true
-        // 在发布版本编译时检查(即使不包含lint目标)，指定问题的规则生成崩溃
-        // fatal 'NewApi', 'InlineApi'
-        // 指定问题的规则生成错误
-        // error 'Wakelock', 'TextViewEdits'
-        // 指定问题的规则生成警告
-        // warning 'ResourceAsColor'
+        abortOnError false
     }
 
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 
-}
-
-dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-    /**
-     * 自定义
-     */
-    //noinspection GradleCompatible
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-
-    //noinspection GradleCompatible
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-
-    //logger
-    implementation 'com.orhanobut:logger:2.2.0'
-    //    implementation 'com.android.tools.lint:lint:25.3.0'
-    //    implementation 'com.android.tools.lint:lint-api:25.3.0'
-    //    implementation 'com.android.tools.lint:lint-checks:25.3.0'
-
-    //eventbus
-    implementation 'org.greenrobot:eventbus:3.1.1'
-
-    //rxjava
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.16'
-
-    //pulltorefresh
-    implementation project(path: ':pulltorefresh')
-
-    //leakcanary
-    implementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-
-    //okio
-    implementation 'com.squareup.okio:okio:1.15.0'
-    //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    //    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }
 
 /**
- * 自定义插件
+ * dependencies
  */
-apply plugin: 'ann-test'
-customPlugin {
-    name = "bobo"
-    age = "25"
-    address = "广东珠海"
-}
-apply from: "../custom_build.gradle"
+apply from: file('build-dependencies-base.gradle')
+apply from: file('build-dependencies-other.gradle')

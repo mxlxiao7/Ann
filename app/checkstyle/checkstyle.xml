@@ -1,0 +1,152 @@
+<!-- <?xml version="1.0"?> --><!DOCTYPE module PUBLIC
+    "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
+    "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
+<module name="Checker">
+    <module name="Translation" />
+
+    <!-- Checks for Size Violations.                    -->
+    <!-- See http://checkstyle.sf.net/config_sizes.html -->
+    <module name="FileLength">
+        <property name="max" value="2500" />
+    </module>
+
+    <!-- Checks for whitespace                               -->
+    <!-- See http://checkstyle.sf.net/config_whitespace.html -->
+    <module name="FileTabCharacter" />
+    <!-- Miscellaneous other checks.                   -->
+    <!-- See http://checkstyle.sf.net/config_misc.html -->
+    <module name="RegexpSingleline">
+        <property name="format" value="\s+$" />
+        <property name="minimum" value="0" />
+        <property name="maximum" value="0" />
+        <property name="message" value="Line has trailing spaces." />
+    </module>
+
+    <module name="SuppressWarningsFilter" />
+    <module name="TreeWalker">
+
+        <module name="SuppressWarningsHolder" />
+        <!-- Checks for Naming Conventions.                  -->
+        <!-- See http://checkstyle.sf.net/config_naming.html -->
+        <module name="ConstantName">
+            <property name="format" value="^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$" />
+        </module>
+        <!--constants (static, final fields) ^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$-->
+        <module name="LocalFinalVariableName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$" />
+        </module><!--local, final variables, including catch parameters ^[a-z][a-zA-Z0-9]*$-->
+        <module name="LocalVariableName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$" />
+            <property name="allowOneCharVarInForLoop" value="true" />
+        </module><!--local, non-final variables, including catch parameters ^[a-z][a-zA-Z0-9]*$-->
+        <module name="MemberName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$" />
+        </module>
+        <module name="MethodName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$" />
+        </module>
+        <module name="PackageName" />
+        <module name="ParameterName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$" />
+            <property name="ignoreOverridden" value="true" />
+        </module>
+        <module name="StaticVariableName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$" />
+        </module>
+        <module name="TypeName" />
+
+        <!-- Checks for imports                              -->
+        <!-- See http://checkstyle.sf.net/config_imports.html -->
+        <module name="AvoidStarImport" /> <!--拒绝import com.a.*-->
+        <module name="IllegalImport" /> <!-- defaults to sun.* packages -->
+        <module name="RedundantImport" /><!--拒绝冗余的类-->
+        <module name="UnusedImports" /><!--拒绝没使用的类-->
+        <!-- Checks for Size Violations.                    -->
+        <!-- See http://checkstyle.sf.net/config_sizes.html -->
+        <module name="LineLength">
+            <property name="max" value="160" />
+            <property name="ignorePattern"
+                value="^package.*|^import.*|a href|href|http://|https://|ftp://" />
+        </module>
+        <module name="MethodLength" /><!-- default 150,默认空行和单行注释也计算在内-->
+
+        <module name="ModifierOrder" />
+        <!--<module name="RedundantModifier">-->
+        <!--<property name="severity" value="warning"/>-->
+        <!--</module>-->
+
+        <!-- Checks for blocks. You know, those {}'s         -->
+        <!-- See http://checkstyle.sf.net/config_blocks.html -->
+        <module name="AvoidNestedBlocks" />
+        <module name="LeftCurly" /><!--左括弧要跟代码在一行-->
+        <module name="NeedBraces" />
+        <module name="RightCurly" /><!--右括弧不单行-->
+
+        <!-- Checks for common coding problems               -->
+        <!-- See http://checkstyle.sf.net/config_coding.html -->
+        <!-- <module name="AvoidInlineConditionals"/> -->
+        <module name="EmptyStatement" /><!--是否允许空的代码块-->
+        <module name="EqualsHashCode" /><!--检查在重写了equals方法后是否重写了hashCode方法-->
+        <!-- <module name="HiddenField"/> -->
+        <!--<module name="IllegalInstantiation">-->
+        <!--<property name="classes" value="java.lang.Boolean"/>-->
+        <!--<property name="severity" value="warning"/>-->
+        <!--</module>-->
+
+        <module name="MissingSwitchDefault" /><!--检查switch语句是否忘记了default标签-->
+        <module name="DefaultComesLast" /><!--检查switch中default是否在所有case的后面-->
+        <module name="SimplifyBooleanExpression" />
+        <module name="SimplifyBooleanReturn" />
+        <!-- Checks for class design                         -->
+        <!-- See http://checkstyle.sf.net/config_design.html -->
+        <!-- <module name="DesignForExtension"/> -->
+        <module name="FinalClass" />
+        <module name="HideUtilityClassConstructor" />
+        <module name="InterfaceIsType" />
+
+        <!-- Miscellaneous other checks.                   -->
+        <!-- See http://checkstyle.sf.net/config_misc.html -->
+        <module name="ArrayTypeStyle" />
+        <module name="UpperEll" />
+        <!--避免出现空指针-->
+        <module name="EqualsAvoidNull">
+            <message key="equals.avoid.null"
+                value="字符串常量应出现在 equals 比较的左侧,推荐使用TextUtils.equals()" />
+        </module>
+
+        <!-- String的比较不能用!= 和 == -->
+        <module name="StringLiteralEquality" />
+
+        <module name="AbbreviationAsWordInName">
+            <property name="allowedAbbreviationLength" value="5" />
+        </module>
+
+        <module name="AbstractClassName">
+            <property name="format" value="^(Abstract|Base).+$" />
+        </module>
+
+        <module name="SuperClone" />
+        <module name="SuperFinalize" />
+
+        <module name="TodoComment">
+            <property name="format" value="(TODO)|(FIXME)" />
+        </module>
+
+        <module name="VariableDeclarationUsageDistance">
+            <property name="allowedDistance" value="4" />
+            <property name="ignoreVariablePattern" value="^temp.*" />
+            <property name="validateBetweenScopes" value="true" />
+        </module>
+
+        <module name="MultipleStringLiterals">
+            <property name="ignoreStringsRegexp" value='^(("")|(", ")|(" "))$' />
+            <property name="allowedDuplicates" value="4" />
+        </module>
+
+        <module name="EmptyCatchBlock">
+            <property name="exceptionVariableName" value="expected|ignore" />
+            <property name="commentFormat" value="ignore" />
+        </module>
+
+    </module>
+</module>

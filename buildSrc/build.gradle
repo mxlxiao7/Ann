@@ -1,18 +1,20 @@
 apply plugin: 'groovy'
 apply plugin: 'maven-publish'
 
+repositories {
+    google()
+    jcenter()
+    mavenCentral()
+}
+
 /**
  * 编写自定义插件配置
  */
 dependencies {
     compile gradleApi()
+    compile 'com.android.tools.build:gradle:3.4.0'
     compile localGroovy()
 }
-
-repositories {
-    mavenCentral()
-}
-
 
 /**
  * 发布配置，这里发布到本地

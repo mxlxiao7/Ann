@@ -1,0 +1,7 @@
+1、类加载方案
+   DexClassLoader、PathClassLoader:
+        1）PathClassLoader只能加载系统中已经安装过的apk
+
+        2）DexClassLoader可以加载jar/apk/dex，可以从SD卡中加载未安装的apk
+
+2、解决

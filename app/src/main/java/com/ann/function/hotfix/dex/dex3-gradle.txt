@@ -1,0 +1,19 @@
+1、通过依赖相关库查看源码
+
+    compile gradleApi()
+    compile 'com.android.tools.build:gradle:2.3.2'
+
+    值得注意的是，可能并不是所有的android gradle plugin版本都附带有源码的jar，如果遇到了一些没有源码的，
+    即打开后看到的内容是反编译的class或者是没有javadoc的内容，你最好换一个版本
+
+2、repo下载AOSP完整gradle源码
+
+$ mkdir gradle_2.3.0
+$ cd gradle_2.3.0
+$ repo init -u https://android.googlesource.com/platform/manifest -b gradle_2.3.0
+$ repo sync
+
+如果你有编译Android Gradle Plugin的需求，可以用此方法。当然缺点很明显，项目十分巨大，需要占用大量的硬盘资源，
+如果硬盘资源不足，建议还是不要尝试了，举个例子：gradle_2.3.0分支上的代码，大概释放后有30G左右。
+
+详情：https://www.jianshu.com/p/4794f284a60f

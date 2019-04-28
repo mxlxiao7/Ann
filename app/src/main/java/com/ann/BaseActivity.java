@@ -1,37 +1,59 @@
 package com.ann;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+
+import com.ann.designpattern.mvp.IBasePresenter;
+import com.jaeger.library.StatusBarUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-public abstract class BaseActivity extends AppCompatActivity {
+import java.util.Objects;
 
+import icepick.Icepick;
+
+/**
+ * Activity基类
+ *
+ * @param <P>
+ */
+public abstract class BaseActivity<P extends IBasePresenter> extends AppCompatActivity {
+
+    /**
+     * 业务控制器
+     */
+    protected P mPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(Color.TRANSPARENT);
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        StatusBarUtil.setColorNoTranslucent(this, getColor(R.color.colorPrimary));
+        StatusBarUtil.setDarkMode(this);
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
+
+        mPresenter = createPresenter();
+        if (Objects.nonNull(mPresenter)) {
+            getLifecycle().addObserver(mPresenter);
+        }
+
+        Icepick.restoreInstanceState(this, savedInstanceState);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        if (Objects.nonNull(mPresenter)) {
+            getLifecycle().removeObserver(mPresenter);
+        }
+
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
@@ -39,10 +61,37 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * 钩子方法，让实现MVP的Activity实现
+     *
+     * @return
+     */
+    protected P createPresenter() {
+        //Sub Class hook ,here do nothing
+        return null;
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        Icepick.saveInstanceState(this, outState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
+    }
+
+
+    /**
+     * @param message
+     */
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void emptyEvent(String message) {
-        //hook do nothing
-
-
+        //Sub Class hook ,here do nothing
     }
+
+
 }

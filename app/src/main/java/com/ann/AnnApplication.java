@@ -5,8 +5,11 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.ann.config.Global;
+import com.ann.utils.LogUtil;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
@@ -16,8 +19,9 @@ public class AnnApplication extends Application {
     private RefWatcher refWatcher;
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
 
         if (Global.isDebug()) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().build());

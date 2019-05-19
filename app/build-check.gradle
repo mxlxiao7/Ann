@@ -1,7 +1,6 @@
 checkstyle {
     toolVersion = "8.2"
 }
-
 task checkStyle(type: Checkstyle) {
     configFile file("${project.projectDir}/checkstyle/checkstyle.xml")
     configProperties.checkstyleSuppressionsPath = file("${project.projectDir}/checkstyle/suppressions.xml").absolutePath
@@ -17,6 +16,4 @@ task checkStyle(type: Checkstyle) {
     ignoreFailures = true // 忽略错误继续构建
     classpath = files()
 }
-
-
 check.dependsOn 'checkStyle', 'lint'

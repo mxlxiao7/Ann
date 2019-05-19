@@ -22,3 +22,5 @@
         3）facebook
         4）微信
         5) https://www.open-open.com/lib/view/open1452264136714.html
+备注：
+    使用google指定主dex类，必须关闭R8编辑器，并且minSdkVersion小于21

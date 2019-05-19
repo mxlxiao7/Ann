@@ -37,4 +37,98 @@
     支持Android7.0
 
 3.1、代码修复
-   3.1.1、类加载方案
+   3.1.1、类修复
+       Native流：
+        1) 基于Native Hook的方案
+               需要针对dalvik虚拟机和art虚拟机做适配，需要考虑指令集的兼容问题，需要native代码支持，兼容性上会有一定的影响
+
+                优点：
+                即时生效
+                不需要任何编译器的插桩或者代码改写，对正常运行不引入任何性能开销。这是AspectJ之类的框架没法比拟的优势；
+                对所改写方法的性能开销也极低（微秒级），基本可以忽略不计；
+
+                缺点：
+                最大挑战在于稳定性与兼容性，而且native异常排查难度更高；
+                不支持新增方法，新增类，新增field等
+
+
+        2）
+
+
+
+       Java流
+        1）基于Multidex方案
+           需要反射更改DexElements，改变Dex的加载顺序，这使得patch需要在下次启动时才能生效，实时性就受到了影响，
+           同时这种方案在android N [speed-profile]编译模式下可能会有问题
+
+            优点：
+            不需要考虑对dalvik虚拟机和art虚拟机做适配
+            代码是非侵入式的，对apk体积影响不大
+
+            缺点：
+            需要下次启动才会生效
+            最大挑战在于性能，即Dalvik平台存在插桩导致的性能损耗，Art平台由于地址偏移问题导致补丁包可能过大的问题
+            虚拟机在安装期间为类打上CLASS_ISPREVERIFIED标志是为了提高性能的，我们强制防止类被打上标志是否会影响性能？
+            这里我们会做一下更加详细的性能测试．但是在大项目中拆分dex的问题已经比较严重，很多类都没有被打上这个标志。
+
+
+        2）插桩 - 美团Robust
+           Robust插件对每个产品代码的每个函数都在编译打包阶段自动的插入了一段代码，插入过程对业务开发是完全透明
+           编译打包阶段自动为每个class都增加了一个类型为ChangeQuickRedirect的静态成员，而在每个方法前都插入了
+           使用changeQuickRedirect相关的逻辑，当 changeQuickRedirect不为null时，可能会执行到accessDispatch
+           从而替换掉之前老的逻辑，达到fix的目的
+
+            优点：
+            几乎不会影响性能（方法调用，冷启动）
+            支持Android2.3-8.x版本
+            高兼容性（Robust只是在正常的使用DexClassLoader）、高稳定性，修复成功率高达99.9%
+            补丁实时生效，不需要重新启动
+            支持方法级别的修复，包括静态方法
+            支持增加方法和类
+            支持ProGuard的混淆、内联、优化等操作
+
+            缺点：
+            so和资源的替换暂时不支持
+            会增大apk的体积，平均一个函数会比原来增加17.47个字节，10万个函数会增加1.67M。
+            会增加少量方法数，使用了Robust插件后，原来能被ProGuard内联的函数不能被内联了
+
+        3）微信Tinker
+           服务端做dex差量，将差量包下发到客户端，在ART模式的机型上本地跟原apk中的classes.dex做merge，merge成
+           为一个新的merge.dex后将merge.dex插入pathClassLoader的dexElement，原理类同Q-Zone，为了实现差量包
+           的最小化，Tinker自研了DexDiff/DexMerge算法。Tinker还支持资源和So包的更新，原理类同InstantRun
+
+            优点：
+            支持动态下发代码
+            支持替换So库以及资源
+
+            缺点：
+            不能即时生效，需要下次启动
+        http://image.mamicode.com/info/201801/20180119181542274456.png
+
+   3.1.2、资源修复
+
+   3.1.3、so修复
+        Java Api提供以下两个接口加载一个so库：
+            System.loadLibrary(String libName)：传进去的参数：so库名称， 表示的so库文件，位于apk压缩文件中的libs目录，最后复制到apk安装目录下。
+            System.load(String pathName)：传进去的参数：so库在磁盘中的完整路径， 加载一个自定义外部so库文件 。
+
+        1.动态注册native方法实时生效:
+            动态注册的native方法调用一次JNI_OnLoad方法都会重新完成一次映射， 所以我们是否只要先加载原来的so库,
+            然后再加载补丁so库，就能完成Java层native方法到native层patch后的新方法映射， 这样就完成动态注册
+            native方法的patch实时修复。
+
+            问题：1、art下这样是可以做到实时生效的，但是Dalvik下做不到实时生效
+            原因：Dalvik的一个bug，如果要做到兼容，需要补丁so库重命名
+        2.静态注册
+            缺点：方法名称长
+                 慢
+
+   3.1.4、资源的热修复
+
+            1）提前感知系统兼容性，不兼容则不进行后续操作
+
+            2）服务器端生成patch的资源，客户端应用patch的资源
+
+            3）替换系统AssetManger，加入patch的资源
+
+

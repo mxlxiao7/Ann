@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply from: 'build-plugin.gradle'
 apply from: 'build-flavor.gradle'
-apply from: 'build-check.gradle'
+
 
 android {
     compileSdkVersion 28
@@ -17,25 +17,25 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-        multiDexKeepProguard file('multiDexKeep.pro') // keep specific classes using proguard syntax
-        multiDexKeepFile file('maindexlist.txt') // keep specific classes
+        multiDexKeepFile file('multiDexKeepFile.txt')
+        multiDexKeepProguard file('multiDexKeepProguard.pro')
     }
 
     dexOptions {//dex配置
         javaMaxHeapSize "4g"
         preDexLibraries = false
-        def listFile = project.rootDir.absolutePath + '/app/maindexlist.txt'
+        def listFile = project.rootDir.absolutePath + '/app/multiDexKeepFile.txt'
         additionalParameters = [//dex参数详见 dx --help
                                 '--multi-dex',//多分包
-                                '--set-max-idx-number=1000',//每个包内方法数上限
+                                '--set-max-idx-number=35000',//每个包内方法数上限
                                 '--main-dex-list=' + listFile,//打包进主classes.dex的文件列表
                                 '--minimal-main-dex'//使上一句生效
         ]
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility '1.8'
+        targetCompatibility '1.8'
     }
 
     signingConfigs {
@@ -77,6 +77,9 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
 
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
 
 /**

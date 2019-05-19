@@ -43,6 +43,11 @@
         <activity
             android:name="com.ann.navigation.register.RegisterActivity"
             android:exported="false" />
+
+        <activity
+            android:name="com.ann.kt.KotlinActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

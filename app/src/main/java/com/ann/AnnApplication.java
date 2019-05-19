@@ -6,10 +6,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.multidex.MultiDex;
-import android.util.Log;
 
 import com.ann.config.Global;
-import com.ann.utils.LogUtil;
+import com.didichuxing.doraemonkit.DoraemonKit;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
@@ -28,6 +27,13 @@ public class AnnApplication extends Application {
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().build());
         }
 
+        DoraemonKit.install(this);
+
+        // H5任意门功能需要，非必须
+        DoraemonKit.setWebDoorCallback((context, s) -> {
+            // 使用自己的H5容器打开这个链接
+        });
+
         //内存检测
         refWatcher = setupLeakCanary();
 
@@ -44,7 +50,7 @@ public class AnnApplication extends Application {
 
     /**
      * 初始化LeakCanary
-     *
+     * <p>
      * 为什么要检测当前进程?
      * 答:
      *
@@ -59,7 +65,6 @@ public class AnnApplication extends Application {
 
 
     /**
-     *
      * @param context
      * @return
      */

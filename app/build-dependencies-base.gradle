@@ -4,14 +4,17 @@ dependencies {
     androidTestImplementation "com.android.support.test:runner:1.0.2"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
 
-//    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version") {
-//        force = true
-//    }
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version") {
+        force = true
+    }
 
     /**
      * Dex
      */
     implementation("com.android.support:multidex:1.0.3") {
+        force = true
+    }
+    implementation("com.android.support:multidex-instrumentation:1.0.3") {
         force = true
     }
 
@@ -134,6 +137,21 @@ dependencies {
         force = true
     }
 
+
+    /**
+     * 开发工具
+     */
+    debugImplementation('com.didichuxing.doraemonkit:doraemonkit:1.1.7') {
+        force = true
+    }
+    releaseImplementation('com.didichuxing.doraemonkit:doraemonkit-no-op:1.1.7') {
+        force = true
+    }
+
+    implementation('com.google.guava:guava:27.1-android') {
+        force = true
+    }
+
     /**
      * 内存检测
      */
@@ -143,12 +161,4 @@ dependencies {
     debugImplementation('com.squareup.leakcanary:leakcanary-android-no-op:1.5.4') {
         force = true
     }
-
-    /**
-     * 工具类
-     */
-    implementation('com.google.guava:guava:27.1-android') {
-        force = true
-    }
-
 }

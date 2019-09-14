@@ -1,0 +1,22 @@
+/**
+ * root-build-learn.gradle
+ */
+
+println("****** 输出每个project的执行时间和总时长 ******")
+
+//this.afterEvaluate { org.gradle.api.Project project ->
+//    println "***************** 作业1开始 *****************"
+//    def startBuildTime = 0
+//    def preBuildTask = project.tasks.getByName('preBuild')
+//    preBuildTask.doFirst {
+//        startBuildTime = System.currentTimeMillis()
+//        println "start time is ${startBuildTime}"
+//    }
+//
+//    def endBuildTask = project.tasks.getByName('build')
+//    endBuildTask.doLast {
+//        def endBuildTime = System.currentTimeMillis()
+//        println "the build time is ${endBuildTime - startBuildTime}"
+//        println "***************** 作业1结束 *****************"
+//    }
+//}

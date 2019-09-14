@@ -1,0 +1,6 @@
+/**
+ * root-build-learn.gradle
+ */
+
+println("****** 检查commit是否符合规范 ******")
+

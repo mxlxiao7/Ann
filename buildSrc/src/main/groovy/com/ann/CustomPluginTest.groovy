@@ -17,6 +17,8 @@ class CustomPluginTest implements Plugin<Project> {
                 println("地址：" + project.customPlugin.address)
             }
         }
+
+
     }
 }
 

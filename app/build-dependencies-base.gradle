@@ -148,17 +148,17 @@ dependencies {
         force = true
     }
 
-    implementation('com.google.guava:guava:27.1-android') {
+    implementation('com.google.guava:guava:28.1-jre') {
         force = true
     }
 
     /**
      * 内存检测
      */
-    releaseImplementation('com.squareup.leakcanary:leakcanary-android:1.5.4') {
+    releaseImplementation('com.squareup.leakcanary:leakcanary-android:1.6.3') {
         force = true
     }
-    debugImplementation('com.squareup.leakcanary:leakcanary-android-no-op:1.5.4') {
+    debugImplementation('com.squareup.leakcanary:leakcanary-android-no-op:1.6.3') {
         force = true
     }
 }

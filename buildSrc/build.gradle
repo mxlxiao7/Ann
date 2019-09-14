@@ -11,9 +11,9 @@ repositories {
  * 编写自定义插件配置
  */
 dependencies {
-    compile gradleApi()
-    compile 'com.android.tools.build:gradle:3.4.0'
-    compile localGroovy()
+    implementation gradleApi()
+    implementation 'com.android.tools.build:gradle:3.5.0'
+    implementation localGroovy()
 }
 
 /**

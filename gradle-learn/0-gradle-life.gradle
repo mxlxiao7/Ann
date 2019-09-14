@@ -1,0 +1,48 @@
+/**
+ * root-build-learn.gradle
+ */
+
+println("****** Gradle 生命周期监听 ******")
+
+/**
+ * 一、生命周期
+ */
+//在初始化和配置阶段之间的监听回调（Configuration配置阶段开始前的回调监听）(有种说法是注册时机晚了，需要看源码求证)
+this.beforeEvaluate { project ->
+    println "***************** 【${project.name}】 beforeEvaluate *****************"
+}
+
+//每个project都会执行
+this.gradle.beforeProject { project ->
+    println "-- 【${project.name}】 beforeProject --"
+}
+//每个project都会执行
+this.gradle.afterProject { project ->
+    println "-- 【${project.name}】 afterProject  --"
+}
+
+//在配置阶段之后和执行阶段之前调用(Configuration配置阶段完成后的回调)
+this.afterEvaluate { project ->
+    println "***************** 【${project.name}】 afterEvaluate *****************"
+}
+
+
+//gradle生命周期执行之前 （没有回调,不知道为什么？）
+this.gradle.buildStarted { Gradle gradle ->
+    println "\n***************** buildStarted *****************"
+}
+
+//没有回调,不知道为什么？
+this.gradle.settingsEvaluated { org.gradle.api.initialization.Settings settings ->
+    println "\n***************** settingsEvaluated *****************"
+}
+
+
+this.gradle.projectsEvaluated { org.gradle.api.invocation.Gradle gradle ->
+    println "\n***************** projectsEvaluated *****************"
+}
+
+//gradle生命周期执行完之后 (gralde task执行完毕后的会调此监听)
+this.gradle.buildFinished { BuildResult result ->
+    println "\n***************** buildFinished *****************"
+}

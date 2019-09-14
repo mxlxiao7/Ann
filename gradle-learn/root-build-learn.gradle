@@ -1,0 +1,27 @@
+/**
+ * root-build-learn.gradle
+ */
+println('''**************************************************
+*             Hello Gradle                       *
+**************************************************
+''')
+
+
+//动态 apply gradle-learn文件夹下的文件
+println "【****** 开始遍历gradle文件】"
+def whiteList = ['root-build-learn.gradle']
+def dir = new File('gradle-learn')
+if (dir.exists() && dir.isDirectory()) {
+    def applyFiles = dir.listFiles(new FileFilter() {
+        @Override
+        boolean accept(File file) {
+            return !whiteList.contains(file.getName())
+        }
+    })
+    applyFiles.each { File file ->
+        if (!file.getName().endsWith('gradle')) return
+        println "【****** apply file:" + file.getName()
+        apply from: file
+    }
+}
+
